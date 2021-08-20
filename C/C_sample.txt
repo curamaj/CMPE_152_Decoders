@@ -1,0 +1,45 @@
+int add (int x, int y) {
+    x = x + y;
+    return x;
+}
+
+void main () {
+
+    int i, j;
+    float alpha, beta5x;
+    
+    i = 32;
+    printf("i-->%d", i);
+    
+    j = i+8;
+    printf("j-->%d", j);
+    
+    i = -2 + 3*j;
+    printf("i-->%d", i);
+    
+    alpha = 9.3;
+    beta5x = alpha;
+    beta5x = alpha/3.7 - alpha*2.88;
+    beta5x = 8.45*(alpha + 9.12);
+    
+    printf("alpha-->%f" , alpha);
+    printf("beta5x-->%f", beta5x);
+    
+    do {
+        i = i + 1;
+        printf("i-->%d", i);
+    } while (i < 125);
+    printf("i-->%d", i);
+    
+    
+    if (i <> 70) {
+        printf("i-->%d", i);
+        i = 80;
+    }
+    printf("i-->%d", i);
+    
+    j = add(i, j);
+    printf("j-->%d", j);
+    
+    return;
+}

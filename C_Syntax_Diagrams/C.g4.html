@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>C.g4</title>
+<style type="text/css">
+body { 
+  color: #000;
+  font-family: sans-serif;
+  font-size: 12px;
+  margin: 20px 5px 10px 20px;
+}
+/* resets */
+ul {
+  list-style: none;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+img {
+  border: 0;
+}
+.clear {
+  clear: both;
+}
+.container {
+  position: relative;
+}
+/* Grammar name */
+h1 {
+  font-size: 20px;
+}
+/*Grammar documentation*/
+.gdoc {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+#index {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  overflow: auto;
+}
+#index h2 {
+  margin: 0;
+}
+#index ol {
+  padding-left: 30px;
+  list-style-type: square;
+  color: #364559;
+}
+#index ol li {
+  margin: 2px 0;
+}
+#index ol li a {
+  color: #366199;
+  font-family: monospace;
+}
+#rules {
+  margin-left: 210px;
+  padding-left: 20px;
+  border-left: 1px solid #AAA;
+}
+.rule {
+  margin-bottom: 30px;
+}
+/* Rule name*/
+.rule h3 {
+  color: #364559;
+  background-color: #DADFE6;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 4px 5px;
+  border-bottom: 1px solid #828B99;
+}
+.rule h3 a.topLink {
+  font-family: sans-serif;
+  font-size: 10px;
+  color: #000;
+  margin-left: 20px;
+}
+.rule h3, .rule .ebnf div {
+  font-family: monospace;
+}
+/* Sections: ebnf, railroad*/
+.doc, .ebnf, .railroad {
+  padding-left: 20px;
+}
+.doc h4, .ebnf h4, .railroad h4 {
+  font-size: 12px;
+  margin: 15px 0 10px -20px;
+}
+.ebnf div {
+  background-color: #F7F7F7;
+  border-top: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E8E8E8;
+  padding: 10px 5px;
+}
+.ebnf div .literal {
+  color: #0000FF;
+}
+.ebnf div .keyword {
+  color: #7F0055;
+  font-weight: bold;
+}
+.ebnf div .rule {
+  color: #004084;
+  font-weight: bold;
+}
+.ebnf div .token {
+  font-style:italic;
+}
+.railroad img {
+  display: block;
+}
+footer {
+  float: right;
+}
+</style>
+</head>
+<body>
+<h1><a href="C.g4.html" name="top">C</a></h1>
+<p class="gdoc"></p>
+<div class="container">
+<div id="index">
+<h2>Rules</h2>
+<ol>
+  <li><a href="#program">program</a></li>
+  <li><a href="#header">header</a></li>
+  <li><a href="#main_block">main_block</a></li>
+  <li><a href="#main">main</a></li>
+  <li><a href="#main_closing">main_closing</a></li>
+  <li><a href="#decl_list">decl_list</a></li>
+  <li><a href="#var_list">var_list</a></li>
+  <li><a href="#var_name">var_name</a></li>
+  <li><a href="#var_type">var_type</a></li>
+  <li><a href="#types">types</a></li>
+  <li><a href="#stmt">stmt</a></li>
+  <li><a href="#stmt_list">stmt_list</a></li>
+  <li><a href="#assignment_stmt">assignment_stmt</a></li>
+  <li><a href="#if_stmt">if_stmt</a></li>
+  <li><a href="#if_part">if_part</a></li>
+  <li><a href="#then_part">then_part</a></li>
+  <li><a href="#do_while_stmt">do_while_stmt</a></li>
+  <li><a href="#do_stmt">do_stmt</a></li>
+  <li><a href="#while_stmt">while_stmt</a></li>
+  <li><a href="#func_assignment">func_assignment</a></li>
+  <li><a href="#func_call">func_call</a></li>
+  <li><a href="#call_param_list">call_param_list</a></li>
+  <li><a href="#func">func</a></li>
+  <li><a href="#func_decl">func_decl</a></li>
+  <li><a href="#func_block">func_block</a></li>
+  <li><a href="#func_closing">func_closing</a></li>
+  <li><a href="#func_stmt_list">func_stmt_list</a></li>
+  <li><a href="#func_add">func_add</a></li>
+  <li><a href="#parm_decl_list">parm_decl_list</a></li>
+  <li><a href="#parm_decl">parm_decl</a></li>
+  <li><a href="#if_rel_expr">if_rel_expr</a></li>
+  <li><a href="#do_while_rel_expr">do_while_rel_expr</a></li>
+  <li><a href="#printf_stmt">printf_stmt</a></li>
+  <li><a href="#our_string">our_string</a></li>
+  <li><a href="#variable">variable</a></li>
+  <li><a href="#func_name">func_name</a></li>
+  <li><a href="#parm">parm</a></li>
+  <li><a href="#expr">expr</a></li>
+  <li><a href="#signedNumber">signedNumber</a></li>
+  <li><a href="#sign">sign</a></li>
+  <li><a href="#number">number</a></li>
+  <li><a href="#mul_div_op">mul_div_op</a></li>
+  <li><a href="#add_sub_op">add_sub_op</a></li>
+  <li><a href="#rel_op">rel_op</a></li>
+  <li><a href="#t_f_op">t_f_op</a></li>
+  <li><a href="#INTEGER">INTEGER</a></li>
+  <li><a href="#FLOAT">FLOAT</a></li>
+  <li><a href="#VOID">VOID</a></li>
+  <li><a href="#RETURN">RETURN</a></li>
+  <li><a href="#IF">IF</a></li>
+  <li><a href="#TRUE">TRUE</a></li>
+  <li><a href="#FALSE">FALSE</a></li>
+  <li><a href="#MAIN">MAIN</a></li>
+  <li><a href="#DO">DO</a></li>
+  <li><a href="#WHILE">WHILE</a></li>
+  <li><a href="#IDENTIFIER">IDENTIFIER</a></li>
+  <li><a href="#PRINT_IDENTIFIER">PRINT_IDENTIFIER</a></li>
+  <li><a href="#INTEGER_NUM">INTEGER_NUM</a></li>
+  <li><a href="#FLOAT_NUM">FLOAT_NUM</a></li>
+  <li><a href="#MUL_OP">MUL_OP</a></li>
+  <li><a href="#DIV_OP">DIV_OP</a></li>
+  <li><a href="#ADD_OP">ADD_OP</a></li>
+  <li><a href="#SUB_OP">SUB_OP</a></li>
+  <li><a href="#EQ_OP">EQ_OP</a></li>
+  <li><a href="#NE_OP">NE_OP</a></li>
+  <li><a href="#LT_OP">LT_OP</a></li>
+  <li><a href="#LE_OP">LE_OP</a></li>
+  <li><a href="#GT_OP">GT_OP</a></li>
+  <li><a href="#GE_OP">GE_OP</a></li>
+  <li><a href="#NEWLINE">NEWLINE</a></li>
+  <li><a href="#WS">WS</a></li>
+</ol>
+</div>
+
+<div id="rules">
+<ul>
+  <li class="rule" id="program">
+  <h3>program <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">program</span> :  <span class="operator">(</span> <a href="#func" class="rule">func</a> <span class="operator">)</span><span class="operator">*</span> <a href="#header" class="rule">header</a> <a href="#main_block" class="rule">main_block</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/program.png" />
+  </div>
+  </li>
+  <li class="rule" id="header">
+  <h3>header <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">header</span> :  <a href="#VOID" class="token">VOID</a> <a href="#MAIN" class="token">MAIN</a> <span class="literal">'('</span> <span class="operator">(</span><a href="#parm_decl_list" class="rule">parm_decl_list</a><span class="operator">)</span><span class="operator">*</span> <span class="literal">')'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/header.png" />
+  </div>
+  </li>
+  <li class="rule" id="main_block">
+  <h3>main_block <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">main_block</span> :  <span class="literal">'{'</span> <span class="operator">(</span><a href="#decl_list" class="rule">decl_list</a><span class="operator">)</span><span class="operator">?</span> <a href="#main" class="rule">main</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/main_block.png" />
+  </div>
+  </li>
+  <li class="rule" id="main">
+  <h3>main <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">main</span> :  <span class="operator">(</span><a href="#stmt_list" class="rule">stmt_list</a><span class="operator">)</span><span class="operator">?</span> <a href="#main_closing" class="rule">main_closing</a> <span class="literal">'}'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/main.png" />
+  </div>
+  </li>
+  <li class="rule" id="main_closing">
+  <h3>main_closing <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">main_closing</span> :  <a href="#RETURN" class="token">RETURN</a> <span class="literal">';'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/main_closing.png" />
+  </div>
+  </li>
+  <li class="rule" id="decl_list">
+  <h3>decl_list <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">decl_list</span> :  <a href="#var_list" class="rule">var_list</a> <span class="operator">(</span> <span class="literal">';'</span> <a href="#var_list" class="rule">var_list</a><span class="operator">)</span><span class="operator">*</span> <span class="literal">';'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/decl_list.png" />
+  </div>
+  </li>
+  <li class="rule" id="var_list">
+  <h3>var_list <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">var_list</span> :  <a href="#var_type" class="rule">var_type</a> <a href="#var_name" class="rule">var_name</a> <span class="operator">(</span> <span class="literal">','</span> <a href="#var_name" class="rule">var_name</a><span class="operator">)</span><span class="operator">*</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/var_list.png" />
+  </div>
+  </li>
+  <li class="rule" id="var_name">
+  <h3>var_name <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">var_name</span> :  <a href="#IDENTIFIER" class="token">IDENTIFIER</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/var_name.png" />
+  </div>
+  </li>
+  <li class="rule" id="var_type">
+  <h3>var_type <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">var_type</span> :  <a href="#types" class="rule">types</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/var_type.png" />
+  </div>
+  </li>
+  <li class="rule" id="types">
+  <h3>types <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">types</span> :  <a href="#INTEGER" class="token">INTEGER</a> <span class="operator">#</span><a href="#integerType" class="rule">integerType</a> <span class="operator">|</span> <a href="#FLOAT" class="token">FLOAT</a> <span class="operator">#</span><a href="#floatType" class="rule">floatType</a> <span class="operator">|</span> <a href="#VOID" class="token">VOID</a> <span class="operator">#</span><a href="#voidType" class="rule">voidType</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/types.png" />
+  </div>
+  </li>
+  <li class="rule" id="stmt">
+  <h3>stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">stmt</span> :  <a href="#assignment_stmt" class="rule">assignment_stmt</a> <span class="literal">';'</span> <span class="operator">#</span><a href="#assignmentStmt" class="rule">assignmentStmt</a> <span class="operator">|</span> <a href="#if_stmt" class="rule">if_stmt</a> <span class="operator">#</span><a href="#ifStmt" class="rule">ifStmt</a> <span class="operator">|</span> <a href="#do_while_stmt" class="rule">do_while_stmt</a> <span class="literal">';'</span> <span class="operator">#</span><a href="#doWhileStmt" class="rule">doWhileStmt</a> <span class="operator">|</span> <a href="#func_assignment" class="rule">func_assignment</a> <span class="operator">#</span><a href="#funcAssignmentStmt" class="rule">funcAssignmentStmt</a> <span class="operator">|</span> <a href="#func_call" class="rule">func_call</a> <span class="literal">';'</span> <span class="operator">#</span><a href="#funcCallStmt" class="rule">funcCallStmt</a> <span class="operator">|</span> <a href="#printf_stmt" class="rule">printf_stmt</a> <span class="literal">';'</span> <span class="operator">#</span><a href="#printfStmt" class="rule">printfStmt</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="stmt_list">
+  <h3>stmt_list <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">stmt_list</span> :  <a href="#stmt" class="rule">stmt</a> <span class="operator">(</span> <a href="#stmt" class="rule">stmt</a> <span class="operator">)</span><span class="operator">*</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/stmt_list.png" />
+  </div>
+  </li>
+  <li class="rule" id="assignment_stmt">
+  <h3>assignment_stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">assignment_stmt</span> :  <a href="#variable" class="rule">variable</a> <span class="literal">'='</span> <a href="#expr" class="rule">expr</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/assignment_stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="if_stmt">
+  <h3>if_stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">if_stmt</span> :  <a href="#if_part" class="rule">if_part</a> <a href="#then_part" class="rule">then_part</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/if_stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="if_part">
+  <h3>if_part <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">if_part</span> :  <a href="#IF" class="token">IF</a> <a href="#if_rel_expr" class="rule">if_rel_expr</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/if_part.png" />
+  </div>
+  </li>
+  <li class="rule" id="then_part">
+  <h3>then_part <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">then_part</span> :  <span class="literal">'{'</span> <a href="#stmt_list" class="rule">stmt_list</a> <span class="literal">'}'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/then_part.png" />
+  </div>
+  </li>
+  <li class="rule" id="do_while_stmt">
+  <h3>do_while_stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">do_while_stmt</span> :  <a href="#do_stmt" class="rule">do_stmt</a> <a href="#while_stmt" class="rule">while_stmt</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/do_while_stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="do_stmt">
+  <h3>do_stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">do_stmt</span> :  <a href="#DO" class="token">DO</a> <span class="literal">'{'</span> <a href="#stmt_list" class="rule">stmt_list</a> <span class="literal">'}'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/do_stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="while_stmt">
+  <h3>while_stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">while_stmt</span> :  <a href="#WHILE" class="token">WHILE</a> <a href="#do_while_rel_expr" class="rule">do_while_rel_expr</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/while_stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_assignment">
+  <h3>func_assignment <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_assignment</span> :  <a href="#func_name" class="rule">func_name</a> <span class="literal">'='</span> <a href="#stmt" class="rule">stmt</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_assignment.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_call">
+  <h3>func_call <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_call</span> :  <a href="#func_name" class="rule">func_name</a> <span class="literal">'('</span> <span class="operator">(</span><a href="#call_param_list" class="rule">call_param_list</a><span class="operator">)</span><span class="operator">*</span> <span class="literal">')'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_call.png" />
+  </div>
+  </li>
+  <li class="rule" id="call_param_list">
+  <h3>call_param_list <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">call_param_list</span> :  <a href="#parm" class="rule">parm</a> <span class="operator">(</span> <span class="literal">','</span> <span class="operator">)</span><span class="operator">?</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/call_param_list.png" />
+  </div>
+  </li>
+  <li class="rule" id="func">
+  <h3>func <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func</span> :  <a href="#func_decl" class="rule">func_decl</a> <a href="#func_block" class="rule">func_block</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_decl">
+  <h3>func_decl <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_decl</span> :  <a href="#var_type" class="rule">var_type</a> <a href="#var_name" class="rule">var_name</a> <span class="literal">'('</span> <span class="operator">(</span> <a href="#parm_decl_list" class="rule">parm_decl_list</a> <span class="operator">)</span><span class="operator">?</span> <span class="literal">')'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_decl.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_block">
+  <h3>func_block <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_block</span> :  <span class="literal">'{'</span> <span class="operator">(</span><a href="#decl_list" class="rule">decl_list</a><span class="operator">)</span><span class="operator">?</span> <span class="operator">(</span><a href="#func_stmt_list" class="rule">func_stmt_list</a><span class="operator">)</span><span class="operator">?</span> <a href="#func_closing" class="rule">func_closing</a> <span class="literal">'}'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_block.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_closing">
+  <h3>func_closing <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_closing</span> :  <a href="#RETURN" class="token">RETURN</a> <a href="#func_name" class="rule">func_name</a> <span class="literal">';'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_closing.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_stmt_list">
+  <h3>func_stmt_list <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_stmt_list</span> :  <a href="#func_add" class="rule">func_add</a> <span class="operator">#</span><a href="#func_add_stmt" class="rule">func_add_stmt</a> <span class="operator">|</span> <span class="operator">#</span><a href="#empty_func_stmt" class="rule">empty_func_stmt</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_stmt_list.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_add">
+  <h3>func_add <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_add</span> :  <a href="#variable" class="rule">variable</a> <span class="literal">'='</span> <a href="#variable" class="rule">variable</a> <span class="literal">'+'</span> <a href="#variable" class="rule">variable</a> <span class="literal">';'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_add.png" />
+  </div>
+  </li>
+  <li class="rule" id="parm_decl_list">
+  <h3>parm_decl_list <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">parm_decl_list</span> :  <a href="#parm_decl" class="rule">parm_decl</a> <span class="operator">(</span> <span class="literal">','</span> <a href="#parm_decl" class="rule">parm_decl</a> <span class="operator">)</span><span class="operator">*</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/parm_decl_list.png" />
+  </div>
+  </li>
+  <li class="rule" id="parm_decl">
+  <h3>parm_decl <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">parm_decl</span> :  <a href="#var_type" class="rule">var_type</a> <a href="#var_name" class="rule">var_name</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/parm_decl.png" />
+  </div>
+  </li>
+  <li class="rule" id="if_rel_expr">
+  <h3>if_rel_expr <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">if_rel_expr</span> :  <span class="literal">'('</span> <a href="#expr" class="rule">expr</a> <a href="#rel_op" class="rule">rel_op</a> <a href="#expr" class="rule">expr</a> <span class="literal">')'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/if_rel_expr.png" />
+  </div>
+  </li>
+  <li class="rule" id="do_while_rel_expr">
+  <h3>do_while_rel_expr <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">do_while_rel_expr</span> :  <span class="literal">'('</span> <a href="#expr" class="rule">expr</a> <a href="#rel_op" class="rule">rel_op</a> <a href="#expr" class="rule">expr</a> <span class="literal">')'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/do_while_rel_expr.png" />
+  </div>
+  </li>
+  <li class="rule" id="printf_stmt">
+  <h3>printf_stmt <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">printf_stmt</span> :  <span class="literal">'printf'</span> <span class="literal">'("'</span> <a href="#our_string" class="rule">our_string</a> <span class="literal">'"'</span> <span class="operator">(</span><span class="literal">','</span> <a href="#expr" class="rule">expr</a><span class="operator">)</span><span class="operator">*</span> <span class="literal">')'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/printf_stmt.png" />
+  </div>
+  </li>
+  <li class="rule" id="our_string">
+  <h3>our_string <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">our_string</span> :  <a href="#IDENTIFIER" class="token">IDENTIFIER</a> <span class="literal">'-->'</span> <a href="#PRINT_IDENTIFIER" class="token">PRINT_IDENTIFIER</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/our_string.png" />
+  </div>
+  </li>
+  <li class="rule" id="variable">
+  <h3>variable <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">variable</span> :  <a href="#IDENTIFIER" class="token">IDENTIFIER</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/variable.png" />
+  </div>
+  </li>
+  <li class="rule" id="func_name">
+  <h3>func_name <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">func_name</span> :  <a href="#variable" class="rule">variable</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/func_name.png" />
+  </div>
+  </li>
+  <li class="rule" id="parm">
+  <h3>parm <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">parm</span> :  <a href="#expr" class="rule">expr</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/parm.png" />
+  </div>
+  </li>
+  <li class="rule" id="expr">
+  <h3>expr <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">expr</span> :  <a href="#expr" class="rule">expr</a> <a href="#mul_div_op" class="rule">mul_div_op</a> <a href="#expr" class="rule">expr</a> <span class="operator">#</span><a href="#mulDivExpr" class="rule">mulDivExpr</a> <span class="operator">|</span> <a href="#expr" class="rule">expr</a> <a href="#add_sub_op" class="rule">add_sub_op</a> <a href="#expr" class="rule">expr</a> <span class="operator">#</span><a href="#addSubExpr" class="rule">addSubExpr</a> <span class="operator">|</span> <a href="#number" class="rule">number</a> <span class="operator">#</span><a href="#unsignedNumberExpr" class="rule">unsignedNumberExpr</a> <span class="operator">|</span> <a href="#signedNumber" class="rule">signedNumber</a> <span class="operator">#</span><a href="#signedNumberExpr" class="rule">signedNumberExpr</a> <span class="operator">|</span> <a href="#variable" class="rule">variable</a> <span class="operator">#</span><a href="#variableExpr" class="rule">variableExpr</a> <span class="operator">|</span> <span class="literal">'('</span> <a href="#expr" class="rule">expr</a> <span class="literal">')'</span> <span class="operator">#</span><a href="#parenExpr" class="rule">parenExpr</a> <span class="operator">|</span> <a href="#t_f_op" class="rule">t_f_op</a> <span class="operator">#</span><a href="#boolExpr" class="rule">boolExpr</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/expr.png" />
+  </div>
+  </li>
+  <li class="rule" id="signedNumber">
+  <h3>signedNumber <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">signedNumber</span> :  <a href="#sign" class="rule">sign</a> <a href="#number" class="rule">number</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/signedNumber.png" />
+  </div>
+  </li>
+  <li class="rule" id="sign">
+  <h3>sign <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">sign</span> :  <span class="literal">'+'</span> <span class="operator">|</span> <span class="literal">'-'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/sign.png" />
+  </div>
+  </li>
+  <li class="rule" id="number">
+  <h3>number <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">number</span> :  <a href="#INTEGER_NUM" class="token">INTEGER_NUM</a> <span class="operator">#</span><a href="#integerNumConst" class="rule">integerNumConst</a> <span class="operator">|</span> <a href="#FLOAT_NUM" class="token">FLOAT_NUM</a> <span class="operator">#</span><a href="#floatNumConst" class="rule">floatNumConst</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/number.png" />
+  </div>
+  </li>
+  <li class="rule" id="mul_div_op">
+  <h3>mul_div_op <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">mul_div_op</span> :  <a href="#MUL_OP" class="token">MUL_OP</a> <span class="operator">|</span> <a href="#DIV_OP" class="token">DIV_OP</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/mul_div_op.png" />
+  </div>
+  </li>
+  <li class="rule" id="add_sub_op">
+  <h3>add_sub_op <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">add_sub_op</span> :  <a href="#ADD_OP" class="token">ADD_OP</a> <span class="operator">|</span> <a href="#SUB_OP" class="token">SUB_OP</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/add_sub_op.png" />
+  </div>
+  </li>
+  <li class="rule" id="rel_op">
+  <h3>rel_op <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">rel_op</span> :  <a href="#EQ_OP" class="token">EQ_OP</a> <span class="operator">|</span> <a href="#NE_OP" class="token">NE_OP</a> <span class="operator">|</span> <a href="#LT_OP" class="token">LT_OP</a> <span class="operator">|</span> <a href="#LE_OP" class="token">LE_OP</a> <span class="operator">|</span> <a href="#GT_OP" class="token">GT_OP</a> <span class="operator">|</span> <a href="#GE_OP" class="token">GE_OP</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/rel_op.png" />
+  </div>
+  </li>
+  <li class="rule" id="t_f_op">
+  <h3>t_f_op <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">t_f_op</span> :  <a href="#TRUE" class="token">TRUE</a> <span class="operator">|</span> <a href="#FALSE" class="token">FALSE</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/t_f_op.png" />
+  </div>
+  </li>
+  <li class="rule" id="INTEGER">
+  <h3>INTEGER <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">INTEGER</span> :  <span class="literal">'int'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/INTEGER.png" />
+  </div>
+  </li>
+  <li class="rule" id="FLOAT">
+  <h3>FLOAT <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">FLOAT</span> :  <span class="literal">'float'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/FLOAT.png" />
+  </div>
+  </li>
+  <li class="rule" id="VOID">
+  <h3>VOID <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">VOID</span> :  <span class="literal">'void'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/VOID.png" />
+  </div>
+  </li>
+  <li class="rule" id="RETURN">
+  <h3>RETURN <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">RETURN</span> :  <span class="literal">'return'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/RETURN.png" />
+  </div>
+  </li>
+  <li class="rule" id="IF">
+  <h3>IF <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">IF</span> :  <span class="literal">'if'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/IF.png" />
+  </div>
+  </li>
+  <li class="rule" id="TRUE">
+  <h3>TRUE <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">TRUE</span> :  <span class="literal">'true'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/TRUE.png" />
+  </div>
+  </li>
+  <li class="rule" id="FALSE">
+  <h3>FALSE <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">FALSE</span> :  <span class="literal">'false'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/FALSE.png" />
+  </div>
+  </li>
+  <li class="rule" id="MAIN">
+  <h3>MAIN <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">MAIN</span> :  <span class="literal">'main'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/MAIN.png" />
+  </div>
+  </li>
+  <li class="rule" id="DO">
+  <h3>DO <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">DO</span> :  <span class="literal">'do'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/DO.png" />
+  </div>
+  </li>
+  <li class="rule" id="WHILE">
+  <h3>WHILE <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">WHILE</span> :  <span class="literal">'while'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/WHILE.png" />
+  </div>
+  </li>
+  <li class="rule" id="IDENTIFIER">
+  <h3>IDENTIFIER <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">IDENTIFIER</span> :  [<span class="literal">a-zA-Z</span>][<span class="literal">a-zA-Z0-9</span>]<span class="operator">*</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/IDENTIFIER.png" />
+  </div>
+  </li>
+  <li class="rule" id="PRINT_IDENTIFIER">
+  <h3>PRINT_IDENTIFIER <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">PRINT_IDENTIFIER</span> :  <span class="literal">'%'</span> [<span class="literal">a-z</span>] ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/PRINT_IDENTIFIER.png" />
+  </div>
+  </li>
+  <li class="rule" id="INTEGER_NUM">
+  <h3>INTEGER_NUM <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">INTEGER_NUM</span> :  [<span class="literal">0-9</span>]<span class="operator">+</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/INTEGER_NUM.png" />
+  </div>
+  </li>
+  <li class="rule" id="FLOAT_NUM">
+  <h3>FLOAT_NUM <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">FLOAT_NUM</span> :  <a href="#INTEGER_NUM" class="token">INTEGER_NUM</a> <span class="literal">'.'</span> <a href="#INTEGER_NUM" class="token">INTEGER_NUM</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/FLOAT_NUM.png" />
+  </div>
+  </li>
+  <li class="rule" id="MUL_OP">
+  <h3>MUL_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">MUL_OP</span> :  <span class="literal">'*'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/MUL_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="DIV_OP">
+  <h3>DIV_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">DIV_OP</span> :  <span class="literal">'/'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/DIV_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="ADD_OP">
+  <h3>ADD_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">ADD_OP</span> :  <span class="literal">'+'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/ADD_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="SUB_OP">
+  <h3>SUB_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">SUB_OP</span> :  <span class="literal">'-'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/SUB_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="EQ_OP">
+  <h3>EQ_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">EQ_OP</span> :  <span class="literal">'=='</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/EQ_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="NE_OP">
+  <h3>NE_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">NE_OP</span> :  <span class="literal">'<>'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/NE_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="LT_OP">
+  <h3>LT_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">LT_OP</span> :  <span class="literal">'<'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/LT_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="LE_OP">
+  <h3>LE_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">LE_OP</span> :  <span class="literal">'<='</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/LE_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="GT_OP">
+  <h3>GT_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">GT_OP</span> :  <span class="literal">'>'</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/GT_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="GE_OP">
+  <h3>GE_OP <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">GE_OP</span> :  <span class="literal">'>='</span> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/GE_OP.png" />
+  </div>
+  </li>
+  <li class="rule" id="NEWLINE">
+  <h3>NEWLINE <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">NEWLINE</span> :  <span class="literal">'\r'</span><span class="operator">?</span> <span class="literal">'\n'</span> <span class="operator">-></span> <a href="#skip" class="rule">skip</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/NEWLINE.png" />
+  </div>
+  </li>
+  <li class="rule" id="WS">
+  <h3>WS <a class="topLink" title="Go to top" href="C.g4.html">Top</a></h3>
+  <div class="doc">
+    <p>
+    </p>
+  </div>
+  <div class="ebnf">
+  <h4>Text notation:</h4>
+  <div>
+    <span class="rule">WS</span> :  [<span class="literal"> \t</span>]<span class="operator">+</span> <span class="operator">-></span> <a href="#skip" class="rule">skip</a> ;
+  </div>
+  </div>
+  <div class="railroad">
+  <h4>Visual notation:</h4>
+  <img border="0" src="images/WS.png" />
+  </div>
+  </li>
+</ul>
+</div>
+</div>
+<footer>Generated by: <a href="https://github.com/jknack/antlr4ide">ANTLR 4 IDE</a>. Copyright (c) 2013 <a href="https://twitter.com/edgarespina">Edgar Espina</a></footer>
+</body>
+</html>

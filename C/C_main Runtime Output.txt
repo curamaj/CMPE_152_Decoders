@@ -1,0 +1,21 @@
+ajay@ajay-P64V7:~/Downloads/Decoders/C$ java -cp .:PascalRTL.jar C_main
+i-->32
+j-->40
+i-->118
+alpha-->9.300000
+beta5x-->155.649002
+i-->119
+i-->120
+i-->121
+i-->122
+i-->123
+i-->124
+i-->125
+i-->125
+i-->125
+i-->80
+j-->120
+
+                0.01 seconds total execution time.
+ajay@ajay-P64V7:~/Downloads/Decoders/C$ 
+
